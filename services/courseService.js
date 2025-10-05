@@ -2,7 +2,7 @@ const coursesRepo = require("../repositories/coursesRepo");
 
 function createCourse(courseData) {
   const course = {
-    id: Date.now(), // ID único
+    id: Date.now(), 
     name: courseData.name,
     teacher: courseData.teacher
   };
