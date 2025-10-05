@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Gestión Académica</title>
+</head>
+<body>
+  <h1>Cursos</h1>
+  <input id="courseName" placeholder="Nombre del curso">
+  <button onclick="addCourse()">Agregar Curso</button>
+
+  <h2>Lista de cursos</h2>
+  <ul id="courseList"></ul>
+
+  <hr>
+
+  <h1>Estudiantes</h1>
+  <input id="studentName" placeholder="Nombre del estudiante">
+  <button onclick="addStudent()">Agregar Estudiante</button>
+
+  <h2>Lista de estudiantes</h2>
+  <ul id="studentList"></ul>
+
+  <script>
+    
+    async function loadCourses() {
+      const res = await fetch("http://localhost:5002/courses");
+      const courses = await res.json();
+      const list = document.getElementById("courseList");
+      list.innerHTML = "";
+      courses.forEach(c => {
+        list.innerHTML += `<li>${c.name}</li>`;
+      });
+    }
+
+    async function addCourse() {
+      const name = document.getElementById("courseName").value;
+      await fetch("http://localhost:5002/courses", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name})
+      });
+      loadCourses();
+    }
+
+    
+    async function loadStudents() {
+      const res = await fetch("http://localhost:5002/students");
+      const students = await res.json();
+      const list = document.getElementById("studentList");
+      list.innerHTML = "";
+      students.forEach(s => {
+        list.innerHTML += `<li>${s.name}</li>`;
+      });
+    }
+
+    async function addStudent() {
+      const name = document.getElementById("studentName").value;
+      await fetch("http://localhost:5002/students", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name })
+      });
+      loadStudents();
+    }
+
+    
+    loadCourses();
+    loadStudents();
+  </script>
+</body>
+</html>
