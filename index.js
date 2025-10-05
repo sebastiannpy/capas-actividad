@@ -8,7 +8,6 @@ app.use(express.json());
 
 app.use(express.static(path.join(__dirname, "public")));
 
-// Rutas de estudiantes y cursos
 const studentsRoute = require("./routes/students");
 const coursesRoute = require("./routes/courses");
 app.use("/students", studentsRoute);
